@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 export const Application = styled.main`
   /* background-color: #FFE4B1; */
+  position: absolute;
   width: 100vw;
-  height: 100vh;
+  top: 0; bottom: 0;
   font-family: 'PingFang SC';
   overflow: hidden;
-  position: relative;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-width: 450px) {
     background-color: #F4F4F4;
   }
 `
@@ -23,8 +23,9 @@ export const LoginTable = styled.section`
   border-radius: 10px;
   background-color: white;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-width: 450px) {
     width: 314px;
+    left: calc(50vw - 157px);
     height: 473.5px;
 
     box-shadow: 1px 1px 5px #D0D0D0;
@@ -40,7 +41,7 @@ export const BingyanGrayLogo = styled.img`
   bottom: -234.58px;
   filter: grayscale(1) brightness(1.35);
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-width: 450px) {
     display: block;
   }
 `
@@ -52,7 +53,7 @@ export const BingyanLineLogo = styled.img`
   top: 0; bottom: 0;
   margin: auto 0;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-width: 450px) {
     display: none;
   }
 `
@@ -75,7 +76,7 @@ export const LoginTitle = styled.title`
     color: #75654E;
   }
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-width: 450px) {
     img {
       width: 40px;
       height: 40px;
@@ -130,7 +131,7 @@ export const LoginNav = styled.nav`
       }
     }
 
-    @media (max-aspect-ratio: 9/16) {
+    @media (max-width: 450px) {
       margin-left: 0;
       margin-right: 14.44px;
       font-size: 12px;
@@ -151,10 +152,12 @@ export const OAuthLoginPanel = styled.footer`
   >section {
     margin: 18px 0;
 
-    >img {
+    >a {
       display: inline-block;
       margin: 0 5px;
       width: 35px; height: 35px;
+
+      background-size: contain;
       cursor: pointer;
     }
 
@@ -163,7 +166,7 @@ export const OAuthLoginPanel = styled.footer`
     }
   }
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-width: 450px) {
     margin: 40px 0;
     font-size: 12px;
 
@@ -182,7 +185,7 @@ export const Copyright = styled.footer`
   font-size: 20px;
   color: #8C8C8C;
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-width: 450px) {
     font-size: 12px;
     color: #C5C5C5;
   }

@@ -6,11 +6,12 @@ import logoPng from '/src/assets/bingyan.png';
 import logoLinePng from '/src/assets/bingyan-line.png';
 import googleSVG from '/src/assets/google.svg';
 import appleSVG from '/src/assets/apple.svg';
-import githubSVG from '/src/assets/github.svg';
+import githubSVG from '../../assets/github.svg';
 
-const thirdOAuth = [
-  googleSVG, githubSVG
-]
+const thirdOAuth: { img: string, url: string }[] = [
+  { img: googleSVG, url: 'https://accounts.google.com/o/oauth2/v2/auth?client_id=596203162431-ti82fard6njh578kvmlg4fqjjpqacu5r.apps.googleusercontent.com&redirect_uri=http://localhost:5173/bingyansso-web/google-oauth&response_type=token&scope=https://www.googleapis.com/auth/userinfo.email' },
+  { img: githubSVG, url: 'https://github.com/login/oauth/authorize?client_id=873405807054de896553' }
+];
 
 function Login() {
   const [loginPanel, setLoginPanel] = useState(1);  //0: Message, 1: Password;
@@ -37,7 +38,8 @@ function Login() {
           <OAuthLoginPanel>
             <div>第三方账号登录</div>
             <section>
-              { thirdOAuth.map(svg => <img src={ svg } />)}
+              { thirdOAuth.map(oauth => 
+                <a href={ oauth.url } style={{ backgroundImage: `url(${ oauth.img })` }} />)}
             </section>
           </OAuthLoginPanel>
         </LoginContent>

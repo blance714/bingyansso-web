@@ -7,7 +7,8 @@ import { useState } from "react";
 export function PasswordLoginPanel() {
   return (
     <Panel>
-      <InputBox logoSrc={ userSVG } placeholder="请输入用户名/手机号/邮箱" autoComplete="username" />
+      <InputBox logoSrc={ userSVG } placeholder="请输入用户名/手机号/邮箱"
+        autoComplete="username" inputMode="email"/>
       <InputBox logoSrc={ lockSVG } placeholder="请输入密码" type="password" />
       <LoginButton>登 录</LoginButton>
       <SignupWrapper>
@@ -26,9 +27,11 @@ export function SMSLoginPanel() {
 
   return (
   <Panel>
-    <InputBox logoSrc={ userSVG } placeholder="请输入手机号" autoComplete="username" />
+    <InputBox logoSrc={ userSVG } placeholder="请输入手机号"
+      autoComplete="tel" inputMode="tel"/>
     <SMSWrapper>
-      <InputBox logoSrc={ lockSVG } placeholder="请输入短信验证码" />
+      <InputBox logoSrc={ lockSVG } placeholder="请输入短信验证码"
+        autoComplete="one-time-code" inputMode="numeric"/>
       <RequestSMSButton />
     </SMSWrapper>
     <LoginButton>登 录</LoginButton>
@@ -61,6 +64,12 @@ const LoginButton = styled.button`
   font-size: 15px;
   
   cursor: pointer;
+
+  transition: filter 0.22s cubic-bezier(0.65, 0.05, 0.36, 1);
+
+  :hover {
+    filter: brightness(1.08)
+  }
 `;
 
 const SignupWrapper = styled.div`
@@ -76,7 +85,7 @@ const SignupWrapper = styled.div`
     cursor: pointer;
   }
 
-  @media (max-aspect-ratio: 9/16) {
+  @media (max-width: 450px) {
     margin-top: 8px;
   }
 `
