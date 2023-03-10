@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Application, BingyanLogo, BingyanLogoLeft, BingyanLogoRight, LoginContent, LoginNav, LoginTable, LoginTitle, OAuthLoginPanel } from "./styled";
+import { Application, BingyanGrayLogo, BingyanLineLogo, BingyanLogo, BingyanLogoLeft, BingyanLogoRight, Copyright, LoginContent, LoginNav, LoginTable, LoginTitle, OAuthLoginPanel } from "./styled";
 import { PasswordLoginPanel, SMSLoginPanel } from "./LoginPanel";
 
 import logoPng from '/src/assets/bingyan.png';
+import logoLinePng from '/src/assets/bingyan-line.png';
 import googleSVG from '/src/assets/google.svg';
 import appleSVG from '/src/assets/apple.svg';
 import githubSVG from '/src/assets/github.svg';
@@ -16,12 +17,12 @@ function Login() {
 
   return (
     <Application>
-      <BingyanLogoLeft src={ logoPng } />
-      <BingyanLogoRight src={ logoPng } />
+      <BingyanLineLogo src={ logoLinePng } />
+      <BingyanGrayLogo src={ logoPng } />
       <LoginTable>
         <LoginTitle>
           <img src={logoPng} />
-          <header>冰岩作坊单点登录</header>
+          <header>单点登录</header>
         </LoginTitle>
         <LoginContent>
           <LoginNav>
@@ -41,6 +42,7 @@ function Login() {
           </OAuthLoginPanel>
         </LoginContent>
       </LoginTable>
+      <Copyright>Powered by Bingyan Studio</Copyright>
     </Application>
   );
 }

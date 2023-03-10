@@ -41,16 +41,13 @@ export function SMSLoginPanel() {
 }
 
 const Panel = styled.section`
-  width: 261px;
-  margin: 0 auto;
-
   > * {
-    margin: 30px auto;
+    margin: 25px auto;
   }
 `
 
 const LoginButton = styled.button`
-  width: 261px;
+  width: 100%;
   height: 38px;
   display: block;
   margin: 0;
@@ -77,6 +74,10 @@ const SignupWrapper = styled.div`
   a {
     color: #C78527;
     cursor: pointer;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    margin-top: 8px;
   }
 `
 

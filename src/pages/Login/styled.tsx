@@ -1,64 +1,60 @@
 import styled from "styled-components";
-import logoPng from '/src/assets/bingyan.png';
 
 export const Application = styled.main`
-  background-color: #FFE4B1;
+  /* background-color: #FFE4B1; */
+  width: 100vw;
   height: 100vh;
   font-family: 'PingFang SC';
+  overflow: hidden;
+  position: relative;
+
+  @media (max-aspect-ratio: 9/16) {
+    background-color: #F4F4F4;
+  }
 `
-// export const TopCover = styled.div`
-//   position: absolute;
-//   left: 0; right: 0;
-//   height: 1.7rem;
-//   background-color: #43e7f0;
-// `;
-// export const WaveImage = styled.img`
-//   position: absolute;
-//   left: 0;
-//   top: 1.7rem;
-// `;
-// export const Title = styled.div`
-//   position: absolute;
-//   font-size: 3.4rem;
-//   line-height: 3rem;
-//   font-weight: lighter;
-//   font-family: YouSheBiaoTiHei;
-//   left: 0; right: 0;
-//   margin: 0 auto;
-//   width: fit-content;
-//   top: 1.9rem;
-//   color: #000000;
-// `;
-// export const Subtitle = styled.div`
-//   font-family: sansserif;
-//   font-weight: bold;
-//   font-size: 1.5rem;
-// `;
+
 export const LoginTable = styled.section`
   position: absolute;
-  left: 0; right: 0;
+  left: calc(50vw - 165px + clamp(0px, 100vw - 650px, 862px) * 0.4 );
   top: 0; bottom: 0;
-  margin: auto;
-  width: 520px;
+  margin: auto 0;
+  width: 330px;
   height: 520px;
   border-radius: 10px;
-  background-color: #ffffffe9;
-  box-shadow: 1px 1px 10px -8px gray;
+  background-color: white;
+
+  @media (max-aspect-ratio: 9/16) {
+    width: 314px;
+    height: 473.5px;
+
+    box-shadow: 1px 1px 5px #D0D0D0;
+  }
 `
 
-export const BingyanLogo = styled.img`
+export const BingyanGrayLogo = styled.img`
+  display: none;
   position: absolute;
-  width: 806.97px;
-  opacity: 0.3;
+  width: 640px;
+  left: calc(50vw - 320px);
+  top: auto;
+  bottom: -234.58px;
+  filter: grayscale(1) brightness(1.35);
+
+  @media (max-aspect-ratio: 9/16) {
+    display: block;
+  }
 `
 
-export const BingyanLogoLeft = styled(BingyanLogo)`
-  right: calc(max(147.5px, 50vw - 608.43px) + 50vw);
-  bottom: calc(max(-95.82px, 50vh - 586.82px) + 50vh);
-`
-export const BingyanLogoRight = styled(BingyanLogo)`
-  left: calc(50vw + max(211.26px, 50vw - 544.73px));
-  top: calc(50vh + max(-155px, 50vh - 646px));
+export const BingyanLineLogo = styled.img`
+  position: absolute;
+  width: 885.47px;
+  left: calc(50vw - 1100.8px + clamp(0px, 100vw - 650px, 862px) * 0.4);
+  top: 0; bottom: 0;
+  margin: auto 0;
+
+  @media (max-aspect-ratio: 9/16) {
+    display: none;
+  }
 `
 
 export const LoginTitle = styled.title`
@@ -69,18 +65,26 @@ export const LoginTitle = styled.title`
   align-items: center;
 
   img {
-    width: 64.2px;
-    height: 64.2px;
-    margin: 20px;
+    width: 54.5px;
+    height: 54.5px;
+    margin: 0 6px 0 20px;
   }
 
   header {
-    font-family: 'PingFang SC';
-    font-style: normal;
-    font-weight: 400;
     font-size: 32px;
-    line-height: 45px;
     color: #75654E;
+  }
+
+  @media (max-aspect-ratio: 9/16) {
+    img {
+      width: 40px;
+      height: 40px;
+      margin-right: 5px;
+    }
+
+    header {
+      font-size: 21px;
+    }
   }
 `
 
@@ -88,20 +92,16 @@ export const LoginContent = styled.div`
   /* background-color: #f684a4; */
   width: 100%;
   height: 80%;
+  padding: 0 30px;
+  box-sizing: border-box; 
 `
 
 export const LoginNav = styled.nav`
-  padding-left: 50px;
-  margin: 15px 0;
-
   a {
-    padding: 0 7.3px;
+    margin-left: 8px;
+    margin-right: 19px;
 
-    font-family: 'PingFang SC';
-    font-style: normal;
-    font-weight: 400;
     font-size: 15px;
-    line-height: 21px;
 
     color: #BDBDBD;
     cursor: pointer;
@@ -129,6 +129,12 @@ export const LoginNav = styled.nav`
         width: 17.6px;
       }
     }
+
+    @media (max-aspect-ratio: 9/16) {
+      margin-left: 0;
+      margin-right: 14.44px;
+      font-size: 12px;
+    }
   }
 `
 
@@ -142,15 +148,42 @@ export const OAuthLoginPanel = styled.footer`
   flex-direction: column;
   align-items: center;
 
-  > section {
+  >section {
     margin: 18px 0;
+
+    >img {
+      display: inline-block;
+      margin: 0 5px;
+      width: 35px; height: 35px;
+      cursor: pointer;
+    }
+
+    >img:first-child {
+      margin-left: 0;
+    }
   }
 
-  > section > img {
-    display: inline-block;
-    margin: 0 5px;
-    width: 35px; height: 35px;
-    cursor: pointer;
-    /* border-radius: 50%; */
+  @media (max-aspect-ratio: 9/16) {
+    margin: 40px 0;
+    font-size: 12px;
+
+    align-items: flex-start;
+
+  }
+`
+
+export const Copyright = styled.footer`
+  position: absolute;
+  left: 0; right: 0;
+  width: fit-content;
+  margin: 0 auto;
+  bottom: 30.65px;
+
+  font-size: 20px;
+  color: #8C8C8C;
+
+  @media (max-aspect-ratio: 9/16) {
+    font-size: 12px;
+    color: #C5C5C5;
   }
 `
