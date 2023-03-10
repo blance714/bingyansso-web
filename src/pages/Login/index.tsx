@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Application, BingyanGrayLogo, BingyanLineLogo, BingyanLogo, BingyanLogoLeft, BingyanLogoRight, Copyright, LoginContent, LoginNav, LoginTable, LoginTitle, OAuthLoginPanel } from "./styled";
+import { Application, BingyanGrayLogo, BingyanLineLogo, Copyright, LoginContent, LoginNav, LoginTable, LoginTitle, OAuthLoginPanel } from "./styled";
 import { PasswordLoginPanel, SMSLoginPanel } from "./LoginPanel";
 
 import logoPng from '/src/assets/bingyan.png';
