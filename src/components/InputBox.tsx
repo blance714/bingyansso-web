@@ -1,7 +1,7 @@
 import { InputHTMLAttributes } from "react"
 import styled from "styled-components"
 
-export function InputBox({ placeholder, logoSrc, onChange, type, ...props } : {
+export function InputBox({ placeholder, logoSrc, value, onChange, type, ...props } : {
   placeholder?: string,
   logoSrc?: string,
   onChange?: React.ChangeEventHandler<HTMLInputElement>,
@@ -9,7 +9,7 @@ export function InputBox({ placeholder, logoSrc, onChange, type, ...props } : {
   return (
     <InputBoxWrapper>
       <img src={ logoSrc }></img>
-      <input type={ type ?? "text" } placeholder={ placeholder } onChange={ onChange } {...props} />
+      <input type={ type ?? "text" } value={ value } placeholder={ placeholder } onChange={ onChange } {...props} />
       <InputBoxLine />
     </InputBoxWrapper>
   )
