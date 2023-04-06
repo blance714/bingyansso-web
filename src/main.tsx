@@ -3,23 +3,21 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import { App } from "./pages/App";
 import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
-import Login from "./pages/Login";
-import { Error } from "./pages/Error";
+import { OAuthCallback } from "./pages/OAuthCallback";
 
 const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <App />
-    },
-    {
-      path: "thirdOAuth",
-      children: [{ path: "github", element: <div>github</div> }],
-    },
+      element: <App />,
+      children: [
+        {
+          path: "oauth/:type",
+          element: <OAuthCallback />
+        }
+      ],
+    }
   ],
-  {
-    basename: "/bingyansso-web",
-  }
 );
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(

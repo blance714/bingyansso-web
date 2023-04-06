@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-export const Application = styled.main`
+export const Application = styled.div`
   /* background-color: #FFE4B1; */
   position: absolute;
   width: 100vw;
@@ -58,16 +58,21 @@ export const Copyright = styled.footer`
   }
 `;
 
-export const AppPanel = styled.section`
+export const AppPanel = styled.main`
   position: absolute;
+  inset: 0 auto;
   left: calc(50vw - 165px + clamp(0px, 100vw - 650px, 862px) * 0.4);
-  top: 0;
-  bottom: 0;
   margin: auto 0;
+
   width: 330px;
   height: 520px;
+
+  display: flex;
+  flex-direction: column;
+
   border-radius: 10px;
   background-color: white;
+  border: solid 1px red;
 
   @media (max-width: 450px) {
     width: 314px;
@@ -78,7 +83,7 @@ export const AppPanel = styled.section`
   }
 `;
 
-export const BingyanTitle = styled.title`
+export const BingyanTitle = styled.header`
   /* background-color: #6ee5d7; */
   width: 100%;
   height: 20%;
@@ -91,7 +96,7 @@ export const BingyanTitle = styled.title`
     margin: 0 6px 0 20px;
   }
 
-  header {
+  span {
     font-size: 32px;
     color: #75654e;
   }

@@ -5,7 +5,6 @@ import lockSVG from "/src/assets/lock.svg";
 import { useState } from "react";
 import { getToken } from "@/API/user/getToken";
 import { setJWT } from "@/tools/jwt";
-import { NavigateFunction, useLocation, useNavigate } from "react-router-dom";
 
 function login(type: string, params: { [N: string]: string }) {
   return getToken(type, params).then((data) => {
@@ -17,7 +16,6 @@ function login(type: string, params: { [N: string]: string }) {
 export function PasswordLoginPanel() {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
-  const location = useLocation();
 
   return (
     <Panel>
@@ -100,7 +98,7 @@ const LoginButton = styled.button`
   color: white;
 
   background: #ffb448;
-  border-radius: 2px;
+  border-radius: 38px;
   border: none;
 
   font-size: 15px;

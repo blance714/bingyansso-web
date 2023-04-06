@@ -8,30 +8,22 @@ import {
   BingyanTitle,
   Copyright,
 } from "./styled";
-import { Outlet, useSearchParams } from "react-router-dom";
+import { Outlet, useOutlet, useSearchParams } from "react-router-dom";
 import Login from "../Login";
 import { Error } from "../Error";
 import { getJWT, setJWT } from "@/tools/jwt";
-import { useEffect } from "react";
+import { PropsWithChildren, useEffect } from "react";
+import { Auth } from "../Auth";
 
 export function App() {
   const [ searchParams ] = useSearchParams();
 
-  const paramsLegal =
-    ["client_id", "response_type", "scope", "redirect_uri"]
-      .every(v => searchParams.has(v));
+  const paramsLegal = true;
+    // ["client_id", "response_type", "scope", "redirect_uri"]
+    //   .every(v => searchParams.has(v));
 
-  const [ jwt, expire ] = getJWT();
-
-  useEffect(() => {
-    if ( jwt && expire ) {
-      if ((new Date().getTime() / 1000) > parseInt(expire)) {
-        setJWT();
-      }
-    }
-  }, [jwt, expire]);
-
-  const jwtLegal = jwt && expire && (new Date().getTime() / 1000) <= parseInt(expire);
+  const jwt = getJWT();
+  const outlet = useOutlet();
 
   return (
     <Application>
@@ -40,11 +32,13 @@ export function App() {
       <AppPanel>
         <BingyanTitle>
           <img src={logoPng} />
-          <header>单点登录</header>
+          <span>单点登录</span>
         </BingyanTitle>
-        { paramsLegal ? (
-          jwtLegal ? <div>qwq</div> : <Login />
-        ) : <Error /> }
+        { outlet
+          ? outlet
+          : paramsLegal
+          ? (jwt ? <Auth /> : <Login />)
+          : <Error />}
       </AppPanel>
       <Copyright>Powered by Bingyan Studio</Copyright>
     </Application>
