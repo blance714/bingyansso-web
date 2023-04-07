@@ -8,11 +8,10 @@ import {
   BingyanTitle,
   Copyright,
 } from "./styled";
-import { Outlet, useOutlet, useSearchParams } from "react-router-dom";
+import { useOutlet, useSearchParams } from "react-router-dom";
 import Login from "../Login";
 import { Error } from "../Error";
-import { getJWT, setJWT } from "@/tools/jwt";
-import { PropsWithChildren, useEffect } from "react";
+import { getJWT } from "@/tools/jwt";
 import { Auth } from "../Auth";
 
 export function App() {

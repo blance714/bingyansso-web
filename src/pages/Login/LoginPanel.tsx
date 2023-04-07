@@ -5,6 +5,7 @@ import lockSVG from "/src/assets/lock.svg";
 import { useState } from "react";
 import { getToken } from "@/API/user/getToken";
 import { setJWT } from "@/tools/jwt";
+import { useNavigate } from "react-router-dom";
 
 function login(type: string, params: { [N: string]: string }) {
   return getToken(type, params).then((data) => {
@@ -16,6 +17,7 @@ function login(type: string, params: { [N: string]: string }) {
 export function PasswordLoginPanel() {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   return (
     <Panel>
@@ -35,7 +37,7 @@ export function PasswordLoginPanel() {
         type="password"
       />
       <LoginButton
-        onClick={() => login("password", { account, password }).then(() => window.location.reload()) }
+        onClick={() => login("password", { account, password }).then(() => navigate(0)) }
       >
         登 录
       </LoginButton>
