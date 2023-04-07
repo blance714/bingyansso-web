@@ -2,7 +2,6 @@ import { InputHTMLAttributes } from "react"
 import styled from "styled-components"
 
 export function InputBox({ placeholder, logoSrc, value, onChange, type, ...props } : {
-  placeholder?: string,
   logoSrc?: string,
   onChange?: React.ChangeEventHandler<HTMLInputElement>,
 } & InputHTMLAttributes<HTMLInputElement>) {

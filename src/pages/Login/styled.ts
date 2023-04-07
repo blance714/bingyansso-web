@@ -1,11 +1,8 @@
 import styled from "styled-components";
 
 export const LoginContent = styled.div`
-  /* background-color: #f684a4; */
-  width: 100%;
-  height: 80%;
-  padding: 0 30px;
-  box-sizing: border-box; 
+  width: 80%;
+  margin: 0 auto;
 `
 
 export const LoginNav = styled.nav`

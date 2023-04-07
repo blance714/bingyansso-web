@@ -1,0 +1,83 @@
+---
+kind: pipeline
+type: docker
+name: node-default
+
+steps:
+  - name: restore-cache
+    image: drillster/drone-volume-cache
+    settings:
+      restore: true
+      mount:
+        - ./.npm-cache
+        - ./node_modules
+    volumes:
+      - name: cache
+        path: /cache
+
+  - name: npm-install
+    image: node:18
+    commands:
+      - npm config set cache ./.npm-cache --global
+      - npm i
+
+  - name: rebuild-cache
+    image: drillster/drone-volume-cache
+    settings:
+      rebuild: true
+      mount:
+        - ./.npm-cache
+        - ./node_modules
+    volumes:
+      - name: cache
+        path: /cache
+
+  - name: build-dist
+    image: node:18
+    environment:
+      CI: true
+      NODE_OPTIONS: --max_old_space_size=4096
+    commands:
+      - npm run build
+
+  - name: scp_files
+    image: appleboy/drone-scp
+    when:
+      event:
+        - tag
+    settings:
+      host:
+        from_secret: ssh_host
+      username:
+        from_secret: username
+      key:
+        from_secret: ssh_key
+      port: 50022
+      target: /mnt/var/www/drone/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
+      source: ./
+
+volumes:
+  - name: cache
+    host:
+      path: /tmp/node/cache
+
+---
+kind: secret
+name: username
+get:
+  path: secret/data/ssh
+  name: username
+
+---
+kind: secret
+name: ssh_host
+get:
+  path: secret/data/ssh
+  name: host50
+
+---
+kind: secret
+name: ssh_key
+get:
+  path: secret/data/ssh
+  name: key50

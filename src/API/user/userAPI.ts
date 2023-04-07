@@ -1,4 +1,4 @@
-const API = 'https://api.bingyan.net/dev/sso/user/';
+const API = 'https://api.bingyan.net/dev/sso/user';
 
 /**
  * @function fetchUserAPI
@@ -11,8 +11,8 @@ export function fetchUserAPI(
   params?: { [N: string]: string },
   body?: { [N: string]: string }
 ) {
-  const searchParams = new URLSearchParams(params);
-  const requestURL = API + url + '?' + searchParams.toString();
+  const searchParams = new URLSearchParams(params).toString();
+  const requestURL = API + url + (searchParams ? '?' + searchParams : '');
 
   return fetch(requestURL , {
     method: body ? 'POST' : 'GET',
@@ -20,6 +20,6 @@ export function fetchUserAPI(
   }).then(res => res.json())
   .then(json => {
     if (json.success == true) return json.data;
-    else return Promise.reject(json.message);
+    else return Promise.reject("API Error: " + json.message);
   })
 }

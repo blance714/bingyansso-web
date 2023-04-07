@@ -1,9 +1,13 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import { App } from "./pages/App";
-import { RouterProvider, createBrowserRouter, redirect } from "react-router-dom";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { OAuthCallback } from "./pages/OAuthCallback";
+
+import App from "./pages/App";
+import Login from "./pages/Login";
+import Auth from "./pages/Auth";
+import Register from "./pages/Register";
 
 const router = createBrowserRouter(
   [
@@ -11,6 +15,18 @@ const router = createBrowserRouter(
       path: "/",
       element: <App />,
       children: [
+        {
+          index: true,
+          element: <Auth />
+        },
+        {
+          path: "login",
+          element: <Login />
+        },
+        {
+          path: "register",
+          element: <Register />
+        },
         {
           path: "oauth/:type",
           element: <OAuthCallback />

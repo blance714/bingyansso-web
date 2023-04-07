@@ -8,20 +8,9 @@ import {
   BingyanTitle,
   Copyright,
 } from "./styled";
-import { useOutlet, useSearchParams } from "react-router-dom";
-import Login from "../Login";
-import { Error } from "../Error";
-import { getJWT } from "@/tools/jwt";
-import { Auth } from "../Auth";
+import { useOutlet } from "react-router-dom";
 
-export function App() {
-  const [ searchParams ] = useSearchParams();
-
-  const paramsLegal = true;
-    // ["client_id", "response_type", "scope", "redirect_uri"]
-    //   .every(v => searchParams.has(v));
-
-  const jwt = getJWT();
+export default function App() {
   const outlet = useOutlet();
 
   return (
@@ -33,11 +22,7 @@ export function App() {
           <img src={logoPng} />
           <span>单点登录</span>
         </BingyanTitle>
-        { outlet
-          ? outlet
-          : paramsLegal
-          ? (jwt ? <Auth /> : <Login />)
-          : <Error />}
+        { outlet }
       </AppPanel>
       <Copyright>Powered by Bingyan Studio</Copyright>
     </Application>
