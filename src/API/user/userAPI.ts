@@ -1,23 +1,25 @@
 const API = 'https://api.bingyan.net/dev/sso/user/';
 
 /**
- * @function getUserAPI
+ * @function fetchUserAPI
  * @param {string} url
  * @param {Object} params
  * @returns Promise<any>
  */
-export function getUserAPI(
+export function fetchUserAPI(
   url: string,
   params?: { [N: string]: string },
+  body?: { [N: string]: string }
 ) {
   const searchParams = new URLSearchParams(params);
   const requestURL = API + url + '?' + searchParams.toString();
 
   return fetch(requestURL , {
-    method: 'GET'
+    method: body ? 'POST' : 'GET',
+    body: body ? JSON.stringify(body) : undefined
   }).then(res => res.json())
   .then(json => {
-    if (json.success) return json.data;
+    if (json.success == true) return json.data;
     else return Promise.reject(json.message);
   })
 }

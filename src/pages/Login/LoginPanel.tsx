@@ -2,10 +2,11 @@ import styled from "styled-components";
 import { InputBox } from "../../components/InputBox";
 import userSVG from "/src/assets/user.svg";
 import lockSVG from "/src/assets/lock.svg";
-import { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { getToken } from "@/API/user/getToken";
 import { setJWT } from "@/tools/jwt";
 import { useNavigate } from "react-router-dom";
+import { getEmailCode, getPhoneCode } from "@/API/user/getCode";
 
 function login(type: string, params: { [N: string]: string }) {
   return getToken(type, params).then((data) => {
@@ -51,30 +52,35 @@ export function PasswordLoginPanel() {
   );
 }
 
-export function SMSLoginPanel() {
-  const SMSWrapper = styled.div`
-    display: flex;
-    align-items: center;
-  `;
+export function CodeLoginPanel({type} : {type: 'phone' | 'email'}) {
+  const [value, setValue] = useState("");
+  const [code, setCode] = useState("");
+  const navigate = useNavigate();
 
   return (
     <Panel>
       <InputBox
+        value={value}
+        onChange={e => setValue(e.target.value)}
         logoSrc={userSVG}
-        placeholder="请输入手机号"
-        autoComplete="tel"
-        inputMode="tel"
+        placeholder={ "请输入" + (type === "phone" ? "手机号" : "邮箱") }
+        autoComplete={ type === "phone" ? "tel" : "email" }
+        inputMode={ type === "phone" ? "tel" : "email" }
       />
-      <SMSWrapper>
+      <CodeWrapper>
         <InputBox
+          value={code}
+          onChange={e => setCode(e.target.value)}
           logoSrc={lockSVG}
-          placeholder="请输入短信验证码"
+          placeholder="请输入验证码"
           autoComplete="one-time-code"
           inputMode="numeric"
         />
-        <RequestSMSButton />
-      </SMSWrapper>
-      <LoginButton>登 录</LoginButton>
+        <RequestCodeButton type={type} value={value} valid={true}/>
+      </CodeWrapper>
+      <LoginButton
+        onClick={() => login(`${type}_code`, { [type]: value, code }).then(() => navigate(0)) }
+      >登 录</LoginButton>
       <SignupWrapper>
         <span></span>
         <span>
@@ -84,6 +90,11 @@ export function SMSLoginPanel() {
     </Panel>
   );
 }
+
+const CodeWrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
 
 const Panel = styled.section`
   > * {
@@ -132,21 +143,44 @@ const SignupWrapper = styled.div`
   }
 `;
 
-function RequestSMSButton() {
-  const SMSButton = styled.a`
-    color: #c78527;
-    font-size: 13px;
-    cursor: pointer;
-  `;
+function RequestCodeButton({ type, value, valid }: {
+  type: "phone" | "email",
+  value: string,
+  valid: boolean
+}) {
+  const [remainingTime, setRemainingTime] = useState(0);
+  const timerRef = useRef<number | undefined>();
+  useEffect(() => {
+    if (remainingTime > 0 && timerRef.current === undefined) {
+      timerRef.current = window.setInterval(() => {
+        setRemainingTime(remainingTime - 1);
+      }, 1000);
+      return () => {
+        window.clearInterval(timerRef.current);
+        timerRef.current = undefined;
+      }
+    }
+  }, [remainingTime])
 
-  const [requesting, setRequesting] = useState(false);
+  const getCode = () => {
+    (type === "phone" ? getPhoneCode : getEmailCode)(value).then(() => {
+      setRemainingTime(60);
+    }).catch(reason => console.log(`getCode Error: ${reason}`));
+  }
 
+  const requesting = remainingTime > 0;
   return (
-    <SMSButton
+    <CodeButton valid={ valid && !requesting }
       style={{ opacity: requesting ? 0.3 : 1 }}
-      onClick={() => setRequesting(true)}
+      onClick={() => getCode()}
     >
-      {requesting ? "已发送" : "发送验证码"}
-    </SMSButton>
+      {requesting ? `已发送(${remainingTime}s)` : "发送验证码"}
+    </CodeButton>
   );
 }
+
+const CodeButton = styled.a`
+  color: #c78527;
+  font-size: 13px;
+  cursor: ${(props: { valid: boolean }) => props.valid ? "pointer" : "not-allowed"};
+`;

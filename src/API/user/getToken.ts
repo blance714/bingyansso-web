@@ -1,7 +1,7 @@
-import { getUserAPI } from "./userAPI";
+import { fetchUserAPI } from "./userAPI";
 
 export function getToken(type: string, params: { [N: string]: string }) {
-  return getUserAPI('token', {
+  return fetchUserAPI('token', {
     type, ...params
   })
 }

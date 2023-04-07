@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { LoginContent, LoginNav, OAuthLoginPanel } from "./styled";
-import { PasswordLoginPanel, SMSLoginPanel } from "./LoginPanel";
+import { PasswordLoginPanel, CodeLoginPanel } from "./LoginPanel";
 
 import feishuSVG from "@/assets/feishu.svg";
 import githubSVG from "@/assets/github.svg";
@@ -23,7 +23,7 @@ function Login() {
 
   const redirectOAuth = (provider: string) => {
     const redirect_uri = encodeURIComponent(
-      `https://chen03.github.io/bingyansso-web/oauth/${provider}` + location.search
+      `${window.location.origin}/oauth/${provider}` + location.search
     );
     const url = thirdOAuth[provider].url + `&redirect_uri=${redirect_uri}`;
     window.location.href = url;
@@ -32,20 +32,20 @@ function Login() {
   return (
     <LoginContent>
       <LoginNav>
-        <a
-          className={loginPanel === 0 ? "selected" : ""}
-          onClick={() => setLoginPanel(0)}
+        {['手机验证', '邮箱验证', '密码登录'].map((typeName, index) => 
+          <a
+          key={index}
+          className={loginPanel === index ? "selected" : ""}
+          onClick={() => setLoginPanel(index)}
         >
-          验证码登录
-        </a>
-        <a
-          className={loginPanel === 1 ? "selected" : ""}
-          onClick={() => setLoginPanel(1)}
-        >
-          密码登录
-        </a>
+          {typeName}
+        </a>)}
       </LoginNav>
-      {loginPanel === 0 ? <SMSLoginPanel /> : <PasswordLoginPanel />}
+
+      { loginPanel === 0 ? <CodeLoginPanel type="phone" />
+      : loginPanel === 1 ? <CodeLoginPanel type="email" />
+      : <PasswordLoginPanel />}
+
       <OAuthLoginPanel>
         <div>第三方账号登录</div>
         <section>
