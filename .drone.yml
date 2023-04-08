@@ -56,7 +56,7 @@ steps:
       overwrite: true
       port: 22
       target: /mnt/var/www/yinn/sso-fe
-      source: ./
+      source: dist/.
 
 volumes:
   - name: cache
