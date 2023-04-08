@@ -62,24 +62,3 @@ volumes:
   - name: cache
     host:
       path: /tmp/node/cache
-
----
-kind: secret
-name: username
-get:
-  path: secret/data/ssh
-  name: username
-
----
-kind: secret
-name: ssh_host
-get:
-  path: secret/data/ssh
-  name: host53
-
----
-kind: secret
-name: ssh_key
-get:
-  path: secret/data/ssh
-  name: key53
