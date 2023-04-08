@@ -55,7 +55,7 @@ steps:
       strip_components: 1
       overwrite: true
       port: 22
-      target: /mnt/var/www/yinn/sso-fe
+      target: /mnt/var/www/yinn/sso-fe/bingyansso-web
       source: dist/.
 
 volumes:
