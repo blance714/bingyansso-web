@@ -49,11 +49,13 @@ steps:
       host:
         from_secret: ssh_host
       username:
-        from_secret: username
+        from_secret: ssh_user
       key:
         from_secret: ssh_key
-      port: 50022
-      target: /mnt/var/www/drone/${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
+      strip_components: 1
+      overwrite: true
+      port: 22
+      target: /mnt/var/www/yinn/sso-fe
       source: ./
 
 volumes:
@@ -73,11 +75,11 @@ kind: secret
 name: ssh_host
 get:
   path: secret/data/ssh
-  name: host50
+  name: host53
 
 ---
 kind: secret
 name: ssh_key
 get:
   path: secret/data/ssh
-  name: key50
+  name: key53
