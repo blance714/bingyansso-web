@@ -49,7 +49,7 @@ export const LoginNav = styled.nav`
 
 export const OAuthLoginPanel = styled.footer`
   width: fit-content;
-  margin: 40px auto;
+  margin: 40px auto 0;
   font-size: 15px;
   color: #bdbdbd;
 

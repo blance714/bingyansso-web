@@ -1,12 +1,14 @@
 import { InputBox } from "../../components/InputBox";
-import userSVG from "/src/assets/user.svg";
-import lockSVG from "/src/assets/lock.svg";
 import { useState } from "react";
 import { getToken } from "@/API/user/getToken";
 import { setJWT } from "@/tools/jwt";
 import { LoginButton, Panel, SignupWrapper } from "./Panel.styled";
 import { useNavigateWithParams } from "@/hooks/useNavigateWithParams";
 import RequestCodeField from "@/components/RequestCodeField";
+
+import userSVG from "@/assets/user.svg";
+import lockSVG from "@/assets/lock.svg";
+import messageSVG from "@/assets/message-code.svg";
 
 function login(type: string, params: { [N: string]: string }) {
   return getToken(type, params).then((data) => {
@@ -73,6 +75,7 @@ export function CodeLoginPanel({type} : {type: 'phone' | 'email'}) {
       <RequestCodeField
         type={type} code={code}
         onChange={e => setCode(e.target.value)}
+        logoSrc={messageSVG}
         account={code}
       />
       <LoginButton

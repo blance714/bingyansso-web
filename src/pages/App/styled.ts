@@ -84,9 +84,8 @@ export const AppPanel = styled.main`
 `;
 
 export const BingyanTitle = styled.header`
-  /* background-color: #6ee5d7; */
   width: 100%;
-  height: 20%;
+  flex: 0 0 20%;
   display: flex;
   align-items: center;
 

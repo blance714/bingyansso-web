@@ -38,7 +38,7 @@ steps:
       CI: true
       NODE_OPTIONS: --max_old_space_size=4096
     commands:
-      - npm run build
+      - npm run build -- --mode=development
 
   - name: scp_files
     image: appleboy/drone-scp

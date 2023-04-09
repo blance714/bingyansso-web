@@ -1,11 +1,15 @@
 import postUser from "@/API/user/postUser";
 import { useNavigateWithParams } from "@/hooks/useNavigateWithParams";
-import { FormEvent, useState } from "react";
-import { useLocation } from "react-router-dom";
-import styled from "styled-components";
-import { RegisterButton, RegsiterContent, Title } from "./styled";
+import { useState } from "react";
+import { ErrorMessage, RegisterButton, RegsiterContent, Title } from "./styled";
 import { InputBox } from "@/components/InputBox";
 import RequestCodeField from "@/components/RequestCodeField";
+
+import userSVG from "@/assets/user.svg";
+import lockSVG from "@/assets/lock.svg";
+import passwordSVG from "@/assets/password-check.svg"
+import smsSVG from "@/assets/sms.svg"
+import messageSVG from "@/assets/message-code.svg";
 
 export default function Register() {
   const [nickname, setNickname] = useState("");
@@ -14,40 +18,88 @@ export default function Register() {
   const [account, setAccount] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
+  const [type, setType] = useState<"phone_code" | "email_code">("phone_code");
   const [loading, setLoading] = useState(false);
 
   const navigateWithParams = useNavigateWithParams();
 
-  const handleReigster = async () => {
-    if (nickname.length === 0)  setError("Please enter nickname.");
+  const handleRegister = async () => {
+    if (nickname.length === 0) setError("Please enter nickname.");
     else if (password.length === 0) setError("Please enter password.");
     else if (password !== confirmPassword) setError("Passwords do not match");
     else if (account.length === 0) setError("Please enter account.");
     else if (code.length === 0) setError("Please enter code.");
     else {
+      if (account.match(/^\d*$/)) {
+        if (account.length !== 11) {
+          setError("Invalid phone number.");
+          return;
+        } else setType("phone_code");
+      } else {
+        if (!account.match(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/)) {
+          setError("Invalid email address.");
+          return;
+        } else setType("email_code");
+      }
+
       try {
         setError("");
         setLoading(true);
-        const data = await postUser({ nickname, password, account, code, type: "phone_code" });
+        const data = await postUser({
+          nickname, password, account, code, type
+        });
         console.log(data);
-        navigateWithParams('/login');
-      } catch(e) {
+        navigateWithParams("/login");
+      } catch (e) {
         setError("Error: " + e);
       }
       setLoading(false);
     }
-  }
+  };
 
   return (
     <RegsiterContent>
       <Title>注册冰岩账号</Title>
-      <InputBox placeholder="昵称" value={nickname} onChange={e => setNickname(e.target.value)} autoComplete="nickname" />
-      <InputBox placeholder="密码" value={password} onChange={e => setPassword(e.target.value)} type="password" autoComplete="new-password" />
-      <InputBox placeholder="确认密码" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} type="password" autoComplete="new-password" />
-      <InputBox placeholder="手机号/邮箱" value={account} onChange={e => setAccount(e.target.value)} />
-      <RequestCodeField code={code} onChange={e => setCode(e.target.value)} type={"phone"} account={account} />
-      <RegisterButton onClick={handleReigster}>注册</RegisterButton>
+      <InputBox
+        placeholder="昵称"
+        value={nickname}
+        onChange={(e) => setNickname(e.target.value)}
+        logoSrc={userSVG}
+        autoComplete="nickname"
+      />
+      <InputBox
+        placeholder="密码"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        logoSrc={lockSVG}
+        type="password"
+        autoComplete="new-password"
+      />
+      <InputBox
+        placeholder="确认密码"
+        value={confirmPassword}
+        onChange={(e) => setConfirmPassword(e.target.value)}
+        logoSrc={passwordSVG}
+        type="password"
+        autoComplete="new-password"
+      />
+      <InputBox
+        placeholder="手机号/邮箱"
+        value={account}
+        onChange={(e) => setAccount(e.target.value)}
+        logoSrc={smsSVG}
+      />
+      <RequestCodeField
+        code={code}
+        onChange={(e) => setCode(e.target.value)}
+        logoSrc={messageSVG}
+        type={"phone"}
+        account={account}
+      />
+      <ErrorMessage style={{ opacity: error ? 1 : 0 }}>
+        {error ? error : "　"}
+      </ErrorMessage>
+      <RegisterButton onClick={handleRegister}>注册</RegisterButton>
     </RegsiterContent>
-  )
+  );
 }
-

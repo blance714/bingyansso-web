@@ -18,7 +18,7 @@ const thirdOAuth: {[N: string] : { img: string; url: string }} = {
 };
 
 function Login() {
-  const [loginPanel, setLoginPanel] = useState(1); //0: Message, 1: Password;
+  const [loginPanel, setLoginPanel] = useState(2); //0: SMS, 1: Mail, 2: Password;
   const location = useLocation()
 
   const redirectOAuth = (provider: string) => {

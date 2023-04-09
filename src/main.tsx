@@ -8,6 +8,7 @@ import App from "./pages/App";
 import Login from "./pages/Login";
 import Auth from "./pages/Auth";
 import Register from "./pages/Register";
+import Error from "./pages/Error";
 
 const router = createBrowserRouter(
   [
@@ -30,6 +31,10 @@ const router = createBrowserRouter(
         {
           path: "oauth/:type",
           element: <OAuthCallback />
+        },
+        {
+          path: "error",
+          element: <Error />
         }
       ],
     }

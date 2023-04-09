@@ -17,5 +17,14 @@ export const Title = styled.h3`
 
 export const RegisterButton = styled(Button)`
   width: 100%;
-  margin: 40px 0;
+`
+
+export const ErrorMessage = styled.div`
+  width: fit-content;
+  margin: 10px auto;
+
+  color: orangered;
+  font-size: 12px;
+
+  transition: opacity 0.3s;
 `

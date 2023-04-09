@@ -1,5 +1,3 @@
-import { useRouteLoaderData } from "react-router-dom";
-
-export function Error() {
+export default function Error() {
   return <div>参数不合法。</div>
 }
