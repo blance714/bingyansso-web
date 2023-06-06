@@ -75,7 +75,7 @@ export const OAuthLoginPanel = styled.footer`
   }
 
   @media (max-width: 450px) {
-    margin: 40px 0;
+    margin: 40px 0 0;
     font-size: 12px;
 
     align-items: flex-start;

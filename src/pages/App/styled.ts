@@ -65,19 +65,19 @@ export const AppPanel = styled.main`
   margin: auto 0;
 
   width: 330px;
-  height: 520px;
+  min-height: 520px;
+  height: fit-content;
 
   display: flex;
   flex-direction: column;
 
   border-radius: 10px;
   background-color: white;
-  border: solid 1px red;
+  /* border: solid 1px red; */
 
   @media (max-width: 450px) {
     width: 314px;
     left: calc(50vw - 157px);
-    height: 473.5px;
 
     box-shadow: 1px 1px 5px #d0d0d0;
   }
@@ -85,7 +85,7 @@ export const AppPanel = styled.main`
 
 export const BingyanTitle = styled.header`
   width: 100%;
-  flex: 0 0 20%;
+  flex: 0 0 100px;
   display: flex;
   align-items: center;
 

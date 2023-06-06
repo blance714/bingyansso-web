@@ -9,13 +9,14 @@ const API = 'https://api.bingyan.net/dev/sso/user';
 export function fetchUserAPI(
   url: string,
   params?: { [N: string]: string },
-  body?: { [N: string]: string }
+  body?: { [N: string]: string },
+  method?: 'GET' | 'POST' | 'PUT'
 ) {
   const searchParams = new URLSearchParams(params).toString();
   const requestURL = API + url + (searchParams ? '?' + searchParams : '');
 
   return fetch(requestURL , {
-    method: body ? 'POST' : 'GET',
+    method: method ?? (body ? 'POST' : 'GET'),
     body: body ? JSON.stringify(body) : undefined
   }).then(res => res.json())
   .then(json => {

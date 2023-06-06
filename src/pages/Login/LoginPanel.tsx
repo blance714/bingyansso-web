@@ -1,8 +1,8 @@
 import { InputBox } from "../../components/InputBox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { getToken } from "@/API/user/getToken";
 import { setJWT } from "@/tools/jwt";
-import { LoginButton, Panel, SignupWrapper } from "./Panel.styled";
+import { LoginButton, Panel, SignupWrapper, Turnstile } from "./Panel.styled";
 import { useNavigateWithParams } from "@/hooks/useNavigateWithParams";
 import RequestCodeField from "@/components/RequestCodeField";
 
@@ -17,10 +17,24 @@ function login(type: string, params: { [N: string]: string }) {
   });
 }
 
+function loadTurnstile(callback?: () => void) { //@ts-ignore
+  turnstile.ready(function () { //@ts-ignore
+    turnstile.render('#turnstile', {
+        sitekey: '0x4AAAAAAAD2n21jlxsVbLeM',
+        callback
+    });
+});
+}
+
 export function PasswordLoginPanel() {
   const [account, setAccount] = useState("");
   const [password, setPassword] = useState("");
+  const [checkPassed, setCheckPassed] = useState(false);
   const navigateWithParams = useNavigateWithParams();
+
+  useEffect(() => {
+    loadTurnstile(() => setCheckPassed(true));
+  }, []);
 
   return (
     <Panel>
@@ -39,16 +53,18 @@ export function PasswordLoginPanel() {
         placeholder="请输入密码"
         type="password"
       />
+      <Turnstile id="turnstile" />
       <LoginButton
-        onClick={() => 
+        onClick={checkPassed ? () => 
           login("password", { account, password })
             .then(() => navigateWithParams('/'))
+            : undefined
         }
       >
         登 录
       </LoginButton>
       <SignupWrapper>
-        <a>忘记密码？</a>
+        <a onClick={() => navigateWithParams('/forgot')}>忘记密码？</a>
         <span>
           还没有账号，<a onClick={() => navigateWithParams('/register')}>立刻注册</a>
         </span>

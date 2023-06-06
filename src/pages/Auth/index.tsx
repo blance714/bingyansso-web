@@ -1,4 +1,4 @@
-import { authParams, getAuth } from "@/API/oidc/getAuth"
+import { AuthDatas, AuthParams, getAuth } from "@/API/oidc/getAuth"
 import { useNavigateWithParams } from "@/hooks/useNavigateWithParams";
 import { Button } from "@/styled";
 import { getJWT } from "@/tools/jwt";
@@ -13,7 +13,7 @@ export default function Auth() {
   const [ searchParams ] = useSearchParams();
   const navigate = useNavigate();
   const navigateWithParams = useNavigateWithParams();
-  const params: authParams | null = useMemo(() => 
+  const params: AuthParams | null = useMemo(() => 
     requestedParamsName.some(v => !searchParams.has(v))
     ? null
     : Object.fromEntries(
@@ -37,8 +37,9 @@ export default function Auth() {
   const confirmAuth = async () => {
     setIsRedirecting(true);
     try {
-      await getAuth(params!);
-      console.log(`Auth confirmed.`);
+      const res = await getAuth(params!);
+      const {code, redirect_uri}: AuthDatas = await res.json();
+      window.location.href = redirect_uri + '?code=' + code;
     } catch(e) {
       console.log(`Auth error:`, e);
     }

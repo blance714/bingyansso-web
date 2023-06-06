@@ -1,6 +1,6 @@
 import { fetchUserAPI } from "./userAPI";
 
-export default function postUser(data: {
+export function postUser(data: {
   nickname: string,
   password: string,
   type: string,

@@ -1,6 +1,6 @@
-import postUser from "@/API/user/postUser";
+import { postUser } from "@/API/user/postUser";
 import { useNavigateWithParams } from "@/hooks/useNavigateWithParams";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { ErrorMessage, RegisterButton, RegsiterContent, Title } from "./styled";
 import { InputBox } from "@/components/InputBox";
 import RequestCodeField from "@/components/RequestCodeField";
@@ -17,11 +17,34 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [account, setAccount] = useState("");
   const [code, setCode] = useState("");
-  const [error, setError] = useState("");
-  const [type, setType] = useState<"phone_code" | "email_code">("phone_code");
+  const [error, setError] = useState<string | undefined>(undefined);
+  // const [type, setType] = useState<"phone_code" | "email_code">("phone_code");
   const [loading, setLoading] = useState(false);
 
   const navigateWithParams = useNavigateWithParams();
+
+  const type = useMemo(() => {
+    if (account.length === 0) return undefined;
+    if (account.match(/^\d*$/)) {
+      if (account.length !== 11) {
+        // setError("Invalid phone number.");
+        return "invalid_phone_code";
+      } else return "phone_code";
+    } else {
+      if (!account.match(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/)) {
+        // setError("Invalid email address.");
+        return "invalid_email_code";
+      } else return "email_code";
+    }
+  }, [account]);
+
+  const displayedError = error
+    ? error
+      : type === "invalid_phone_code"
+      ? "Invalid phone number."
+        : type === "invalid_email_code"
+        ? "Invalid email address."
+        : "　";
 
   const handleRegister = async () => {
     if (nickname.length === 0) setError("Please enter nickname.");
@@ -29,21 +52,9 @@ export default function Register() {
     else if (password !== confirmPassword) setError("Passwords do not match");
     else if (account.length === 0) setError("Please enter account.");
     else if (code.length === 0) setError("Please enter code.");
-    else {
-      if (account.match(/^\d*$/)) {
-        if (account.length !== 11) {
-          setError("Invalid phone number.");
-          return;
-        } else setType("phone_code");
-      } else {
-        if (!account.match(/^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/)) {
-          setError("Invalid email address.");
-          return;
-        } else setType("email_code");
-      }
-
+    else if (type) {
       try {
-        setError("");
+        setError(undefined);
         setLoading(true);
         const data = await postUser({
           nickname, password, account, code, type
@@ -89,15 +100,15 @@ export default function Register() {
         onChange={(e) => setAccount(e.target.value)}
         logoSrc={smsSVG}
       />
-      <RequestCodeField
+      <RequestCodeField //TODO: Distinguish phone and email
         code={code}
         onChange={(e) => setCode(e.target.value)}
         logoSrc={messageSVG}
         type={"phone"}
         account={account}
       />
-      <ErrorMessage style={{ opacity: error ? 1 : 0 }}>
-        {error ? error : "　"}
+      <ErrorMessage style={{ opacity: displayedError !== "　" ? 1 : 0 }}>
+        {displayedError}
       </ErrorMessage>
       <RegisterButton onClick={handleRegister}>注册</RegisterButton>
     </RegsiterContent>

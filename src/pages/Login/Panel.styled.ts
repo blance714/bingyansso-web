@@ -28,3 +28,8 @@ export const SignupWrapper = styled.div`
     margin-top: 8px;
   }
 `;
+
+export const Turnstile = styled.div`
+  position: relative;
+  left: calc(50% - 150px);
+`

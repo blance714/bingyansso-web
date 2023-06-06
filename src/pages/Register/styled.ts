@@ -26,5 +26,5 @@ export const ErrorMessage = styled.div`
   color: orangered;
   font-size: 12px;
 
-  transition: opacity 0.3s;
+  transition: opacity ease-in-out 0.3s;
 `

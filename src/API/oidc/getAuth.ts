@@ -1,9 +1,16 @@
 import { fetchOidcAPI } from "./oidcAPI";
 
-export type authParams = {
+export type AuthParams = {
   client_id: string, response_type: string, scope: string, redirect_uri: string, state?: string, nonce?: string
 };
 
-export function getAuth(params: authParams) {
-  return fetchOidcAPI('auth', params, undefined, "jwt");
+export type AuthDatas = {
+  code: string,
+  redirect_uri: string
 }
+
+export function getAuth(params: AuthParams) {
+  return fetchOidcAPI('auth', {
+    ...params, redirect: 'false'
+  }, undefined, "jwt");
+} 
